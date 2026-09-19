@@ -1,0 +1,2 @@
+# Prevent private config file with real keys from going to GitHub
+config.env

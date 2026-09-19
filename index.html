@@ -1,0 +1,213 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>J.A.R.V.I.S. HUD Interface</title>
+  <!-- Sci-Fi Blue SVG Favicon -->
+  <link rel="icon" type="image/svg+xml" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24' fill='none' stroke='%2300AEEF' stroke-width='2' stroke-linecap='round' stroke-linejoin='round'><circle cx='12' cy='12' r='10'/><circle cx='12' cy='12' r='4' fill='%234DE1FF'/><line x1='12' y1='2' x2='12' y2='6'/><line x1='12' y1='18' x2='12' y2='22'/><line x1='2' y1='12' x2='6' y2='12'/><line x1='18' y1='12' x2='22' y2='12'/></svg>">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Orbitron:wght@600;700;800&family=Rajdhani:wght@500;600;700&family=Share+Tech+Mono&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="style.css">
+</head>
+<body>
+
+  <!-- Background Effects -->
+  <div class="tech-grid-bg"></div>
+  <div class="radial-glow"></div>
+  <div class="scanlines"></div>
+
+  <!-- Custom Cursor Follower -->
+  <div id="hud-cursor" class="hud-cursor-follower">
+    <div class="cursor-dot"></div>
+  </div>
+
+  <div class="app-shell">
+
+    <!-- Mobile Overlay -->
+    <div id="sidebar-overlay" class="sidebar-overlay"></div>
+
+    <!-- Sidebar Navigation -->
+    <aside id="sidebar" class="sidebar">
+      <div class="sidebar-header">
+        <h1 class="brand-title">J.A.R.V.I.S.</h1>
+        <button id="sidebar-close-btn" class="btn-icon mobile-only" aria-label="Close Sidebar">
+          <svg viewBox="0 0 24 24" width="20" height="20" fill="none" stroke="currentColor" stroke-width="2">
+            <line x1="18" y1="6" x2="6" y2="18"></line>
+            <line x1="6" y1="6" x2="18" y2="18"></line>
+          </svg>
+        </button>
+      </div>
+
+      <div class="sidebar-actions">
+        <button id="btn-new-session" class="btn-new-session">+ NEW INITIALIZATION</button>
+      </div>
+
+      <div class="session-section">
+        <div class="section-label">// ACTIVE SESSIONS</div>
+        <div id="session-list-container" class="session-list-container">
+          <!-- Dynamic Sessions Rendered Here -->
+        </div>
+      </div>
+
+      <div class="sidebar-footer">
+        <button id="btn-theme-toggle" class="btn-theme-toggle">
+          <div class="toggle-indicator"></div>
+          <span id="toggle-label-text" class="toggle-label">CONTRAST: DARK</span>
+        </button>
+      </div>
+    </aside>
+
+    <!-- Main View Area -->
+    <main class="main-content">
+      
+      <!-- Top Bar Controls -->
+      <header class="top-bar">
+        <div class="top-bar-left">
+          <button id="menu-toggle-btn" class="btn-icon menu-toggle" aria-label="Open Sidebar">
+            <svg viewBox="0 0 24 24" width="20" height="20" fill="none" stroke="currentColor" stroke-width="2">
+              <line x1="3" y1="12" x2="21" y2="12"></line>
+              <line x1="3" y1="6" x2="21" y2="6"></line>
+              <line x1="3" y1="18" x2="21" y2="18"></line>
+            </svg>
+          </button>
+          <div class="status-indicator">
+            <span class="status-label">SYSTEM LOGIC:</span>
+            <span class="status-val">STABLE</span>
+          </div>
+        </div>
+
+        <div class="top-bar-right">
+          <!-- Voice Audio Controls Group -->
+          <div class="audio-controls-group">
+            <button id="btn-audio-toggle" class="btn-msg-action" style="padding: 6px 12px;">
+              <svg id="icon-audio-on" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" width="14" height="14">
+                <polygon points="11 5 6 9 2 9 2 15 6 15 11 19 11 5"></polygon>
+                <path d="M19.07 4.93a10 10 0 0 1 0 14.14M15.54 8.46a5 5 0 0 1 0 7.07"></path>
+              </svg>
+              <svg id="icon-audio-off" class="hidden" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" width="14" height="14">
+                <line x1="1" y1="1" x2="23" y2="23"></line>
+                <path d="M9 9v6a3 3 0 0 0 5.12 2.12M15 9.34V4a3 3 0 0 0-5.94-.6"></path>
+              </svg>
+              <span id="audio-label-text" class="action-label">VOICE: ACTIVE</span>
+            </button>
+
+            <!-- Volume Slider Container -->
+            <div id="volume-wrapper" class="volume-slider-wrapper">
+              <span class="volume-label">VOL</span>
+              <input type="range" id="voice-volume-slider" class="hud-volume-slider" min="0" max="100" value="100" step="1" title="Voice Volume">
+              <span id="volume-val-display" class="volume-val">100%</span>
+            </div>
+          </div>
+        </div>
+      </header>
+
+      <!-- Viewport Views -->
+      <div class="content-viewport">
+
+        <!-- 1. Intro Screen -->
+        <section id="view-intro" class="screen-view active">
+          <div class="hud-top-left-icon">
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5">
+              <circle cx="12" cy="12" r="10"></circle>
+              <path d="M12 2v20M2 12h20"></path>
+            </svg>
+          </div>
+
+          <div class="intro-hero-wrapper">
+            <div class="corner-bracket bracket-tl"></div>
+            <div class="corner-bracket bracket-tr"></div>
+            <div class="corner-bracket bracket-bl"></div>
+            <div class="corner-bracket bracket-br"></div>
+
+            <div class="ai-core-container">
+              <div class="ai-core-ring ring-outer"></div>
+              <div class="ai-core-ring ring-inner"></div>
+              <div class="ai-core-dot"></div>
+            </div>
+
+            <h2 class="intro-title">J.A.R.V.I.S. SYSTEM</h2>
+            <p class="intro-subtitle">Tactical Neural Interface • Standby Mode Ready</p>
+
+            <form id="intro-input-form" class="intro-input-panel">
+              <button type="button" class="btn-mic mic-btn" aria-label="Toggle Voice Input">
+                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                  <path d="M12 1a3 3 0 0 0-3 3v8a3 3 0 0 0 6 0V4a3 3 0 0 0-3-3z"></path>
+                  <path d="M19 10v2a7 7 0 0 1-14 0v-2"></path>
+                  <line x1="12" y1="19" x2="12" y2="23"></line>
+                  <line x1="8" y1="23" x2="16" y2="23"></line>
+                </svg>
+              </button>
+              <input type="text" id="intro-prompt-input" class="hud-input" placeholder="State your command or query..." autocomplete="off">
+              <button type="submit" class="btn-send-icon" aria-label="Send Query">
+                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                  <line x1="22" y1="2" x2="11" y2="13"></line>
+                  <polygon points="22 2 15 22 11 13 2 9 22 2"></polygon>
+                </svg>
+              </button>
+            </form>
+
+            <div class="intro-status-footer">
+              <span class="dot">●</span> SYSTEM READY FOR INPUT
+            </div>
+          </div>
+        </section>
+
+        <!-- 2. Chat Screen -->
+        <section id="view-chat" class="screen-view">
+          <div class="chat-frame">
+            <div class="chat-header-section">
+              <div class="uplink-badge">
+                <svg class="uplink-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                  <path d="M5 12.55a11 11 0 0 1 14.08 0"></path>
+                  <path d="M1.42 9a16 16 0 0 1 21.16 0"></path>
+                  <path d="M8.53 16.11a6 6 0 0 1 6.95 0"></path>
+                  <line x1="12" y1="20" x2="12.01" y2="20"></line>
+                </svg>
+                UPLINK SECURE
+              </div>
+              <h2 class="chat-main-title">TACTICAL CHAT LOG</h2>
+              <div class="chat-sub-status">
+                <svg class="waveform-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                  <polyline points="22 12 18 12 15 21 9 3 6 12 2 12"></polyline>
+                </svg>
+                <span id="chat-sub-status-text">SYSTEM INITIALIZED. AWAITING INPUT.</span>
+              </div>
+            </div>
+
+            <!-- Chat Stream Area -->
+            <div id="chat-stream" class="chat-stream"></div>
+
+            <!-- Bottom Chat Input Bar -->
+            <div class="chat-input-bar">
+              <button type="button" class="btn-mic-circle mic-btn" aria-label="Toggle Voice Input">
+                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                  <path d="M12 1a3 3 0 0 0-3 3v8a3 3 0 0 0 6 0V4a3 3 0 0 0-3-3z"></path>
+                  <path d="M19 10v2a7 7 0 0 1-14 0v-2"></path>
+                  <line x1="12" y1="19" x2="12.01" y2="20"></line>
+                </svg>
+              </button>
+
+              <form id="chat-input-form" class="chat-form-wrapper">
+                <input type="text" id="chat-prompt-input" class="chat-input" placeholder="Execute command..." autocomplete="off">
+                <button type="submit" class="btn-send-box">
+                  TRANSMIT
+                  <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" width="12" height="12">
+                    <line x1="22" y1="2" x2="11" y2="13"></line>
+                    <polygon points="22 2 15 22 11 13 2 9 22 2"></polygon>
+                  </svg>
+                </button>
+              </form>
+            </div>
+          </div>
+        </section>
+
+      </div>
+    </main>
+  </div>
+
+  <script src="config.js"></script>
+<script src="script.js"></script>
+</body>
+</html>
